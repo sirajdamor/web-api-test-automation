@@ -35,4 +35,8 @@ Useful commands:
 Every push runs the tests on GitHub Actions and uploads an HTML report (and failure screenshots).
 
 ## What I learned
-(Write 3 or 4 lines in your own words: for example a locator that failed, why explicit waits are better than sleep, and how fixtures removed repeated code.)
+- Page Object Model: I keep locators and page actions in one class per page (login, inventory, cart, checkout), so when a locator changes I fix it in one place instead of in every test.
+- Fixtures: my conftest.py has fixtures for the browser, a logged-in user and the API session, which removed the same login code from many tests.
+- Explicit waits: I used WebDriverWait instead of time.sleep, so tests wait only as long as needed and are less flaky.
+- CI problem I fixed: my first GitHub Actions run failed because requirements.txt was created outside my virtual environment and contained packages from other projects. I rewrote it with only the four packages this project needs and the pipeline passed.
+- UI vs API tests: API tests run in seconds without a browser, while UI tests take about two minutes, so I use markers (smoke, regression, ui, api) to run only the group I need.
